@@ -110,4 +110,10 @@ MIT — free to use, modify, and distribute.
 
 PRs welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-Built by [AXIA](https://github.com/your-org).
+Built by [AXIA](https://github.com/AXIAbuilt).
+
+## Pro
+
+**[Get AXIA Design Pro — $9](https://axiabuilt.gumroad.com/l/pbbjqy)**
+
+Includes brand audit mode, Figma token export, 20+ extended aesthetics, micro-interaction library, fluid type system, multi-page coherence check, and component spec output. One-time purchase, lifetime access.
