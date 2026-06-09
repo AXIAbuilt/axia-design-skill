@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AXIA Design Skill — Production UI/UX Intelligence for Claude Code</title>
+  <meta name="description" content="Stop generating generic UI. AXIA Design is a Claude Code skill that establishes intentional aesthetic direction and delivers complete, production-ready interfaces." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0A0A0B;
+      --bg-subtle: #111114;
+      --surface:   #1A1A20;
+      --surface-2: #222229;
+      --border:    rgba(255,255,255,0.08);
+      --border-2:  rgba(255,255,255,0.14);
+      --text:      #EEEEF0;
+      --text-2:    #A0A0A8;
+      --text-3:    #606068;
+      --accent:    #7C66DC;
+      --accent-2:  #9B8AE8;
+      --accent-glow: rgba(124,102,220,0.25);
+      --green:     #30A46C;
+      --red:       #E5484D;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      background: rgba(10,10,11,0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 1.25rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-2); font-size: 0.875rem;
+      text-decoration: none; transition: color 150ms;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: #fff !important;
+      padding: 0.4rem 1rem; border-radius: 6px;
+      font-size: 0.875rem; font-weight: 500;
+      transition: background 150ms, transform 150ms !important;
+    }
+    .nav-cta:hover { background: var(--accent-2) !important; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(124,102,220,0.12);
+      border: 1px solid rgba(124,102,220,0.3);
+      border-radius: 9999px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem; font-weight: 500;
+      color: var(--accent-2);
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, #C4B5FD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.125rem; color: var(--text-2);
+      line-height: 1.7; margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: #fff;
+      padding: 0.75rem 1.5rem; border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.9375rem; font-weight: 500;
+      text-decoration: none;
+      transition: background 150ms, transform 150ms var(--ease-out), box-shadow 150ms;
+    }
+    .btn-primary:hover {
+      background: var(--accent-2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--text-2); font-size: 0.9375rem;
+      text-decoration: none;
+      transition: color 150ms;
+    }
+    .btn-ghost:hover { color: var(--text); }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative;
+    }
+    .code-window {
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.5);
+    }
+    .code-titlebar {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-2);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #FF5F57; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green { background: #28C840; }
+    .code-label {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.7rem; color: var(--text-3);
+    }
+    .code-body { padding: 1.25rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.8; }
+    .c-comment { color: #606068; }
+    .c-keyword { color: #C4B5FD; }
+    .c-string  { color: #86EFAC; }
+    .c-fn      { color: #7DD3FC; }
+    .c-var     { color: var(--text); }
+
+    /* BEFORE/AFTER */
+    .compare {
+      padding: 6rem 4rem;
+      background: var(--bg-subtle);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem; color: var(--accent);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .section-desc { color: var(--text-2); max-width: 540px; margin-bottom: 3rem; line-height: 1.7; }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .compare-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .compare-card.bad { border-color: rgba(229,72,77,0.2); }
+    .compare-card.good { border-color: rgba(48,164,108,0.3); }
+    .compare-header {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem; font-weight: 500;
+    }
+    .compare-card.bad .compare-header { color: var(--red); }
+    .compare-card.good .compare-header { color: var(--green); }
+    .compare-body { padding: 1.5rem; }
+    .mock-ui {
+      background: #1E1E24;
+      border-radius: 8px;
+      padding: 1.5rem;
+      min-height: 160px;
+    }
+    /* Bad mock */
+    .mock-bad-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff; text-align: center; }
+    .mock-bad-sub { font-size: 0.875rem; color: #888; text-align: center; margin-bottom: 1rem; }
+    .mock-bad-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+    .mock-bad-card { background: #2A2A35; border-radius: 6px; padding: 0.75rem; text-align: center; }
+    .mock-bad-card-icon { font-size: 1.25rem; margin-bottom: 0.25rem; }
+    .mock-bad-card-text { font-size: 0.7rem; color: #888; }
+    /* Good mock */
+    .mock-good { display: grid; grid-template-columns: 3fr 2fr; gap: 1rem; align-items: center; }
+    .mock-good-left {}
+    .mock-good-tag { display: inline-block; background: rgba(124,102,220,0.2); color: #C4B5FD; font-size: 0.65rem; border-radius: 4px; padding: 0.15rem 0.5rem; margin-bottom: 0.5rem; font-family: var(--font-mono); }
+    .mock-good-title { font-size: 1.5rem; font-weight: 700; line-height: 1.1; color: #fff; margin-bottom: 0.5rem; font-family: var(--font-display); }
+    .mock-good-sub { font-size: 0.75rem; color: #888; margin-bottom: 0.75rem; }
+    .mock-good-btn { display: inline-block; background: var(--accent); color: #fff; font-size: 0.75rem; padding: 0.35rem 0.75rem; border-radius: 6px; }
+    .mock-good-right { display: flex; flex-direction: column; gap: 0.4rem; }
+    .mock-good-stat { background: rgba(124,102,220,0.1); border: 1px solid rgba(124,102,220,0.2); border-radius: 8px; padding: 0.5rem 0.75rem; }
+    .mock-good-stat-val { font-size: 1rem; font-weight: 700; color: #fff; font-family: var(--font-display); }
+    .mock-good-stat-label { font-size: 0.65rem; color: #888; }
+
+    /* FEATURES */
+    .features {
+      padding: 6rem 4rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 3rem;
+    }
+    .feature-cell {
+      background: var(--bg);
+      padding: 2rem;
+      transition: background 200ms;
+    }
+    .feature-cell:hover { background: var(--surface); }
+    .feature-icon {
+      width: 36px; height: 36px;
+      background: rgba(124,102,220,0.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .feature-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .feature-desc { font-size: 0.875rem; color: var(--text-2); line-height: 1.6; }
+
+    /* PRO */
+    .pro {
+      padding: 6rem 4rem;
+      background: var(--bg-subtle);
+      position: relative; overflow: hidden;
+    }
+    .pro::before {
+      content: '';
+      position: absolute; bottom: -300px; right: -300px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .pro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+    .pro-features { display: flex; flex-direction: column; gap: 1rem; }
+    .pro-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 200ms, transform 200ms var(--ease-out);
+    }
+    .pro-item:hover { border-color: var(--border-2); transform: translateX(4px); }
+    .pro-item-icon { font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+    .pro-item-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.2rem; }
+    .pro-item-desc { font-size: 0.8rem; color: var(--text-2); }
+    .pro-card {
+      background: linear-gradient(135deg, rgba(124,102,220,0.15), rgba(124,102,220,0.05));
+      border: 1px solid rgba(124,102,220,0.3);
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .pro-card-badge {
+      display: inline-block;
+      background: var(--accent); color: #fff;
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.75rem; border-radius: 9999px;
+      margin-bottom: 1.5rem;
+    }
+    .pro-card-price {
+      font-family: var(--font-display);
+      font-size: 3rem; font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+    }
+    .pro-card-price span { font-size: 1rem; font-weight: 400; color: var(--text-2); }
+    .pro-card-desc { font-size: 0.875rem; color: var(--text-2); margin-bottom: 2rem; }
+    .pro-card-btn {
+      display: block; width: 100%;
+      background: var(--accent); color: #fff;
+      padding: 0.875rem; border-radius: 8px;
+      font-size: 0.9375rem; font-weight: 500;
+      text-decoration: none;
+      transition: background 150ms, transform 150ms var(--ease-out), box-shadow 150ms;
+      margin-bottom: 1.5rem;
+    }
+    .pro-card-btn:hover {
+      background: var(--accent-2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .pro-card-note { font-size: 0.75rem; color: var(--text-3); }
+
+    /* INSTALL */
+    .install {
+      padding: 6rem 4rem;
+      text-align: center;
+    }
+    .install-box {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border-2);
+      border-radius: 10px;
+      padding: 0.875rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      margin-top: 2rem; margin-bottom: 1rem;
+      cursor: pointer;
+      transition: border-color 150ms;
+    }
+    .install-box:hover { border-color: var(--accent); }
+    .install-comment { font-size: 0.8rem; color: var(--text-3); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: var(--text-3);
+    }
+    footer a { color: var(--text-2); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2rem; }
+      .hero-visual { display: none; }
+      .compare { padding: 4rem 1.5rem; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .features { padding: 4rem 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .pro { padding: 4rem 1.5rem; }
+      .pro-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .install { padding: 4rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#"><span>AXIA</span> Design</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#compare">Examples</a>
+    <a href="#pro">Pro</a>
+    <a href="https://github.com/AXIAbuilt/axia-design-skill" class="nav-cta">Install Free →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Claude Code Skill
+    </div>
+    <h1>Stop building<br /><em>generic UI.</em></h1>
+    <p class="hero-desc">
+      AXIA Design is a Claude Code skill that establishes intentional aesthetic direction
+      before writing a single line of code — then delivers complete, production-ready
+      interfaces with coherent design systems.
+    </p>
+    <div class="hero-actions">
+      <a href="https://github.com/AXIAbuilt/axia-design-skill" class="btn-primary">
+        Install Free on GitHub →
+      </a>
+      <a href="#compare" class="btn-ghost">See examples ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="code-window">
+      <div class="code-titlebar">
+        <div class="dot dot-red"></div>
+        <div class="dot dot-yellow"></div>
+        <div class="dot dot-green"></div>
+        <span class="code-label">axia-design · SKILL.md</span>
+      </div>
+      <div class="code-body">
+        <div><span class="c-comment"># AXIA Design activates...</span></div>
+        <div>&nbsp;</div>
+        <div><span class="c-keyword">You:</span> <span class="c-string">build a dashboard for my SaaS</span></div>
+        <div>&nbsp;</div>
+        <div><span class="c-comment">→ Direction: dark-premium, comfortable</span></div>
+        <div><span class="c-comment">   density, expressive motion budget</span></div>
+        <div>&nbsp;</div>
+        <div><span class="c-fn">tokens</span><span class="c-var">: Syne display · DM Sans body</span></div>
+        <div><span class="c-fn">palette</span><span class="c-var">: #0A0A0B → #1A1A20 → #7C66DC</span></div>
+        <div><span class="c-fn">layout</span><span class="c-var">: sidebar + sticky header</span></div>
+        <div><span class="c-fn">motion</span><span class="c-var">: fade + scale(0.96) + blur</span></div>
+        <div>&nbsp;</div>
+        <div><span class="c-comment">→ Generating complete implementation...</span></div>
+        <div><span class="c-keyword">✓</span> <span class="c-string">All states covered</span></div>
+        <div><span class="c-keyword">✓</span> <span class="c-string">WCAG AA contrast verified</span></div>
+        <div><span class="c-keyword">✓</span> <span class="c-string">Dark mode first</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="compare" id="compare">
+  <div class="section-label">Before / After</div>
+  <h2 class="section-title">What changes with AXIA Design</h2>
+  <p class="section-desc">The same prompt — "build a landing page hero" — with and without the skill installed.</p>
+
+  <div class="compare-grid">
+    <div class="compare-card bad">
+      <div class="compare-header">✗ Without AXIA Design</div>
+      <div class="compare-body">
+        <div class="mock-ui">
+          <div class="mock-bad-title">Welcome to Our Product</div>
+          <div class="mock-bad-sub">The best solution for your needs. Get started today.</div>
+          <div class="mock-bad-cards">
+            <div class="mock-bad-card"><div class="mock-bad-card-icon">⚡</div><div class="mock-bad-card-text">Fast</div></div>
+            <div class="mock-bad-card"><div class="mock-bad-card-icon">🔒</div><div class="mock-bad-card-text">Secure</div></div>
+            <div class="mock-bad-card"><div class="mock-bad-card-icon">📈</div><div class="mock-bad-card-text">Scalable</div></div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-3);margin-top:1rem;">Inter font, purple gradient, centered three-card layout. Could be any product.</p>
+      </div>
+    </div>
+
+    <div class="compare-card good">
+      <div class="compare-header">✓ With AXIA Design</div>
+      <div class="compare-body">
+        <div class="mock-ui">
+          <div class="mock-good">
+            <div class="mock-good-left">
+              <div class="mock-good-tag">v2.4 — now shipping</div>
+              <div class="mock-good-title">Ship faster.<br/>Look better.</div>
+              <div class="mock-good-sub">Design intelligence that knows your stack.</div>
+              <div class="mock-good-btn">Get early access →</div>
+            </div>
+            <div class="mock-good-right">
+              <div class="mock-good-stat"><div class="mock-good-stat-val">4.2k</div><div class="mock-good-stat-label">installs this week</div></div>
+              <div class="mock-good-stat"><div class="mock-good-stat-val">98%</div><div class="mock-good-stat-label">ship rate</div></div>
+              <div class="mock-good-stat"><div class="mock-good-stat-val">8</div><div class="mock-good-stat-label">aesthetics</div></div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-3);margin-top:1rem;">Syne display, asymmetric grid, stat cards, intentional hierarchy. Distinctive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">What's Inside</div>
+  <h2 class="section-title">8 phases. Zero generic output.</h2>
+  <p class="section-desc">Every UI request runs through a structured design process before a single line of code is written.</p>
+
+  <div class="features-grid">
+    <div class="feature-cell">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Design Direction First</div>
+      <div class="feature-desc">Picks a tonal voice — clean SaaS, dark premium, brutalist, editorial — and commits to it before coding.</div>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">🎨</div>
+      <div class="feature-title">Full Token System</div>
+      <div class="feature-desc">Typography, color (3-layer), spacing (8pt grid), and radius tokens generated before any component.</div>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Motion Intelligence</div>
+      <div class="feature-desc">Aesthetic-matched animation tokens and patterns. Motion communicates — never decorates.</div>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">📐</div>
+      <div class="feature-title">Layout Patterns</div>
+      <div class="feature-desc">Context-aware layouts for landing pages, dashboards, auth, pricing, docs, portfolios, e-commerce.</div>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">♿</div>
+      <div class="feature-title">Accessibility Built In</div>
+      <div class="feature-desc">WCAG contrast, keyboard navigation, touch targets, and reduced-motion baked into every output.</div>
+    </div>
+    <div class="feature-cell">
+      <div class="feature-icon">🛠</div>
+      <div class="feature-title">Stack-Specific Code</div>
+      <div class="feature-desc">Tailored for Next.js + Tailwind + shadcn, React, Vue/Nuxt, and plain HTML/CSS.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO -->
+<section class="pro" id="pro">
+  <div class="section-label">AXIA Design Pro</div>
+  <h2 class="section-title">Go deeper.</h2>
+  <p class="section-desc">Pro unlocks advanced capabilities for teams and serious builders.</p>
+
+  <div class="pro-grid">
+    <div class="pro-features">
+      <div class="pro-item">
+        <div class="pro-item-icon">🔍</div>
+        <div><div class="pro-item-title">Brand Audit Mode</div><div class="pro-item-desc">Score existing UI across 8 dimensions — token consistency, hierarchy, state coverage, accessibility, and more.</div></div>
+      </div>
+      <div class="pro-item">
+        <div class="pro-item-icon">📦</div>
+        <div><div class="pro-item-title">Figma Token Export</div><div class="pro-item-desc">W3C Design Token format output — drop directly into Figma Variables, Style Dictionary, or Theo.</div></div>
+      </div>
+      <div class="pro-item">
+        <div class="pro-item-icon">🎭</div>
+        <div><div class="pro-item-title">20 Extended Aesthetics</div><div class="pro-item-desc">Neo-brutalist, Swiss International, Y2K revival, vaporwave, luxury minimal, data-dense, and more.</div></div>
+      </div>
+      <div class="pro-item">
+        <div class="pro-item-icon">✨</div>
+        <div><div class="pro-item-title">Micro-Interaction Library</div><div class="pro-item-desc">Ready-to-use patterns for button press, card lift, input focus, skeleton shimmer, count-up, toast slide-in.</div></div>
+      </div>
+      <div class="pro-item">
+        <div class="pro-item-icon">📏</div>
+        <div><div class="pro-item-title">Fluid Type System</div><div class="pro-item-desc">Fully clamp()-based type and spacing scales that flow smoothly between any two viewport widths.</div></div>
+      </div>
+      <div class="pro-item">
+        <div class="pro-item-icon">📋</div>
+        <div><div class="pro-item-title">Component Spec Output</div><div class="pro-item-desc">Structured component documentation with variants, states, props table, and accessibility notes.</div></div>
+      </div>
+    </div>
+
+    <div class="pro-card">
+      <div class="pro-card-badge">Pro</div>
+      <div class="pro-card-price">$9 <span>/ one-time</span></div>
+      <div class="pro-card-desc">Lifetime access. One purchase, yours forever. Includes all future updates.</div>
+      <a href="https://github.com/AXIAbuilt/axia-design-skill" class="pro-card-btn">Get Pro Access →</a>
+      <div class="pro-card-note">Free tier always available on GitHub</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install">
+  <div class="section-label">Install</div>
+  <h2 class="section-title">One command.<br />Zero setup.</h2>
+  <div class="install-box" onclick="navigator.clipboard.writeText('Copy-Item skills\\axia-design\\SKILL.md &quot;$env:USERPROFILE\\.claude\\skills\\axia-design.md&quot;')">
+    <span style="color:var(--text-3)">PS&gt;</span>
+    <span>Copy-Item skills\axia-design\SKILL.md "$env:USERPROFILE\.claude\skills\axia-design.md"</span>
+  </div>
+  <div class="install-comment">or see the <a href="https://github.com/AXIAbuilt/axia-design-skill#installation" style="color:var(--accent-2)">README</a> for macOS/Linux and project-level install</div>
+</section>
+
+<footer>
+  <span>© 2026 AXIA. MIT License.</span>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="https://github.com/AXIAbuilt/axia-design-skill">GitHub</a>
+    <a href="https://github.com/AXIAbuilt/axia-design-skill/blob/main/CONTRIBUTING.md">Contribute</a>
+    <a href="https://github.com/sponsors/AXIAbuilt">Sponsor</a>
+  </div>
+</footer>
+
+</body>
+</html>
